@@ -1,0 +1,6 @@
+@DOLS_Compulsory_2.Server_HostAddress = http://localhost:5072
+
+GET {{DOLS_Compulsory_2.Server_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
