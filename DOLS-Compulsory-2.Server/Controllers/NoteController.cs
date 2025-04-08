@@ -6,26 +6,19 @@ namespace dols_compulsory_2.Server.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class NoteController : ControllerBase
+    public class NoteController(NoteService noteService) : ControllerBase
     {
-        private readonly NoteService _noteService;
-
-        public NoteController(NoteService noteService)
-        {
-            _noteService = noteService;
-        }
-
         [HttpGet]
         public IActionResult GetAllNotes()
         {
-            var notes = _noteService.GetAll();
+            var notes = noteService.GetAll();
             return Ok(notes);
         }
 
         [HttpGet("{id}")]
         public IActionResult GetNoteById(int id)
         {
-            var note = _noteService.GetById(id);
+            var note = noteService.GetById(id);
             if (note == null)
                 return NotFound();
 
@@ -35,14 +28,14 @@ namespace dols_compulsory_2.Server.Controllers
         [HttpPost]
         public IActionResult CreateNote([FromBody] NoteDTO noteDto)
         {
-            var newNote = _noteService.Create(noteDto);
+            var newNote = noteService.Create(noteDto);
             return CreatedAtAction(nameof(GetNoteById), new { id = newNote.Id }, newNote);
         }
 
         [HttpGet("search")]
         public IActionResult SearchNotes([FromQuery] string query)
         {
-            var results = _noteService.Search(query);
+            var results = noteService.Search(query);
             return Ok(results);
         }
     }
