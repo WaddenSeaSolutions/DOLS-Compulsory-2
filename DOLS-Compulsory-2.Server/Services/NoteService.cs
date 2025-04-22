@@ -1,47 +1,36 @@
 using dols_compulsory_2.Server.Models;
+using DOLS_Compulsory_2.Server.DAL;
 
 namespace dols_compulsory_2.Server.Services
 {
     public class NoteService
     {
-        private readonly List<NoteModel> _notes = new();
-        private int _nextId = 1;
+
+        private readonly NoteDAL _noteDAL;
+
+        public NoteService(NoteDAL noteDAL)
+        {
+            _noteDAL = noteDAL;
+        }
 
         public List<NoteModel> GetAll()
         {
-            return _notes;
+            return _noteDAL.GetAll();
         }
 
-        public NoteModel? GetById(int id)
+        public NoteModel GetById(int id)
         {
-            return _notes.FirstOrDefault(n => n.Id == id);
+            return _noteDAL.GetById(id);
         }
 
         public NoteModel Create(NoteDTO dto)
         {
-            var newNote = new NoteModel
-            {
-                Id = _nextId++,
-                Title = dto.Title,
-                Content = dto.Content
-            };
-
-            _notes.Add(newNote);
-            return newNote;
+            return _noteDAL.Create(dto);
         }
 
         public List<NoteModel> Search(string keyword)
         {
-            if (string.IsNullOrWhiteSpace(keyword))
-                return _notes;
-
-            keyword = keyword.ToLower();
-
-            return _notes
-                .Where(n =>
-                    n.Title.ToLower().Contains(keyword) ||
-                    n.Content.ToLower().Contains(keyword))
-                .ToList();
+            return _noteDAL.Search(keyword);
         }
     }
 }
