@@ -1,24 +1,33 @@
 using Microsoft.AspNetCore.Mvc;
 using dols_compulsory_2.Server.Models;
 using dols_compulsory_2.Server.Services;
+using Microsoft.AspNetCore.Http.HttpResults;
+using Flagsmith;
 
 namespace dols_compulsory_2.Server.Controllers
 {
     [ApiController]
-    [Route("api/[controller]")]
-    public class NoteController(NoteService noteService) : ControllerBase
+    [Route("api/Note")]
+    public class NoteController : ControllerBase 
     {
+        private readonly NoteService _noteService; 
+
+        public NoteController(NoteService noteService) 
+        {
+            _noteService = noteService;
+        }
+
         [HttpGet]
         public IActionResult GetAllNotes()
         {
-            var notes = noteService.GetAll();
+            var notes = _noteService.GetAll();
             return Ok(notes);
         }
 
         [HttpGet("{id}")]
         public IActionResult GetNoteById(int id)
         {
-            var note = noteService.GetById(id);
+            var note = _noteService.GetById(id); 
             if (note == null)
                 return NotFound();
 
@@ -28,14 +37,18 @@ namespace dols_compulsory_2.Server.Controllers
         [HttpPost]
         public IActionResult CreateNote([FromBody] NoteDTO noteDto)
         {
-            var newNote = noteService.Create(noteDto);
-            return CreatedAtAction(nameof(GetNoteById), new { id = newNote.Id }, newNote);
+            var newNote = _noteService.Create(noteDto); 
+            if (newNote == null)
+            {
+                return NotFound();
+            }
+            return Ok(newNote);
         }
 
         [HttpGet("search")]
         public IActionResult SearchNotes([FromQuery] string query)
         {
-            var results = noteService.Search(query);
+            var results = _noteService.Search(query); 
             return Ok(results);
         }
     }
