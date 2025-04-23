@@ -1,0 +1,20 @@
+<div class="feature-container">
+  <div class="feature-content">
+    <header class="header">PadNote</header>
+    <input type="text" [(ngModel)]="noteSearchValue" name="noteSearch" placeholder="Search for a previous note" />
+    <button click="searchNote()">Search</button>
+    <table>
+      <tbody>
+        @for (note of noteSignal(); track $index){
+        <tr>
+          <td>{{ note.Id }}</td>
+          <td>{{ note.Title }}</td>
+          <td>{{ note.Content }}</td>
+          <td>{{ note.CreatedAt }}</td>
+          <td><button click="deleteNote()">Delete</button></td>
+        </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+</div>

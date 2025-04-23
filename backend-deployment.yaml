@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dols-backend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: dols-backend
+  template:
+    metadata:
+      labels:
+        app: dols-backend
+    spec:
+      containers:
+        - name: dols-backend
+          image: andreaseriksen/backend-app:latest
+          ports:
+            - containerPort: 8080
+            - containerPort: 8081 
+          env:
+            - name: ASPNETCORE_ENVIRONMENT
+              value: "Production"
+            - name: ASPNETCORE_URLS
+              value: "http://+:8080"
+          volumeMounts:
+            - name: app-data
+              mountPath: /app/data
+      volumes:
+        - name: app-data
+          emptyDir: {}  
