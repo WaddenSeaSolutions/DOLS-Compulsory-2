@@ -27,6 +27,10 @@ export class HomeFacade {
     return this.noteSignal;
   }
 
+  createNote(title: string, content: string) {
+    this.homeManager.createNote(title, content);
+  }
+
   deleteNote(id: number) {
     this.homeManager.deleteNote(id);
   }

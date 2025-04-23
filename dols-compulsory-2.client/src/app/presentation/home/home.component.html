@@ -1,7 +1,8 @@
 <div class="feature-container">
   <div class="feature-content">
     <header class="header">PadNote</header>
-    <input type="text" name="noteSearch" placeholder="Search for a previous note"/>
+    <input type="text" [(ngModel)]="noteSearchValue" name="noteSearch" placeholder="Search for a previous note" />
+    <button click="searchNote()">Search</button>
     <table>
       <tbody>
         @for (note of noteSignal(); track $index){

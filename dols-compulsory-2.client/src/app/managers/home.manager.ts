@@ -18,6 +18,10 @@ export class HomeManager {
    return this.noteSignal();
   }
 
+  createNote(title: string, content: string) {
+    this.homeService.createNote(title, content);
+  }
+
   deleteNote(id: number) {
     this.homeService.deleteNote(id);
   }

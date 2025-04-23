@@ -18,6 +18,11 @@ export class HomeService {
 
   }
 
+  createNote(title: string, content: string) {
+    const notes = this.http.post<Note>(this.apiUrl + 'Notes/CreateNote', { Title: title, Content: content });
+    return firstValueFrom(notes);
+  }
+
   deleteNote(id: number): Promise<Note> {
     const deletedNote = this.http.delete<Note>(this.apiUrl + 'Notes/DeleteNote/' + id)
     return firstValueFrom(deletedNote);
