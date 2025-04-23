@@ -23,7 +23,7 @@ jobs:
         password: ${{ secrets.DOCKERHUB_TOKEN }}
     - name: Build and push backend image
       run: |
-        docker build -t andreaseriksen/backend:${GITHUB_SHA} ./DOLS-Compulsory-2.Server/Dockerfile .
+        docker build -t andreaseriksen/backend:${GITHUB_SHA} -f ./DOLS-Compulsory-2.Server/Dockerfile .
         docker push andreaseriksen/backend:${GITHUB_SHA}
 
     - name: Build and push frontend image
