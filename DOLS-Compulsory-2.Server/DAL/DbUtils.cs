@@ -8,7 +8,7 @@ public static class DbUtils
 
     static DbUtils()
     {
-        ProperlyFormattedConnectionString = "Server=mariadb_container;User=myuser;Password=mypassword;Port=3306;Database=DOLS;Pooling=true;";
+        ProperlyFormattedConnectionString = "Server=mariadb_container;User=myuser;Password=mypassword;Port=3306;Database=DB;Pooling=true;";
 
         try
         {

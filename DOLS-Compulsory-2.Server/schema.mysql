@@ -1,0 +1,31 @@
+Create Database DOLS
+
+CREATE TABLE Notes (
+    -- 'Id' column: Integer, Primary Key, Auto-incrementing
+    Id INT PRIMARY KEY AUTO_INCREMENT,
+
+    -- 'Title' column: Variable-length string (up to 255 characters), cannot be NULL
+    -- Using VARCHAR instead of SQL Server's NVARCHAR
+    Title VARCHAR(255) NOT NULL,
+
+    -- 'Content' column: Text field for potentially large content, cannot be NULL
+    -- Using TEXT instead of SQL Server's NVARCHAR(MAX)
+    -- Use LONGTEXT if you expect extremely large content ( > 65,535 characters)
+    Content TEXT NOT NULL,
+
+    -- 'CreatedAt' column: Stores the date and time the note was created
+    -- Defaults to the current UTC timestamp when a new row is inserted
+    -- Using DATETIME and UTC_TIMESTAMP() instead of SQL Server's GETUTCDATE()
+    CreatedAt DATETIME NOT NULL DEFAULT UTC_TIMESTAMP()
+);
+
+-- Optional: Specify the character set and collation for the table if needed
+-- ALTER TABLE Notes CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+-- --- Sample Data Insertion ---
+
+-- Insert a sample note into the 'Notes' table.
+-- The 'Id' will be automatically generated because it's AUTO_INCREMENT.
+-- The 'CreatedAt' will use the default value (current UTC timestamp).
+INSERT INTO Notes (Title, Content)
+VALUES ('My First Note', 'This is the content of my very first note in the database!');
