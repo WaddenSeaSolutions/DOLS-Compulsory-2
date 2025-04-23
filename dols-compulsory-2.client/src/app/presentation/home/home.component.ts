@@ -15,4 +15,9 @@ export class HomeComponent {
   {
     this.noteSignal = this.homeFacade.getNoteSignal();
   }
+
+  public deleteNote(id: number)
+  {
+    this.homeFacade.deleteNote(id);
+  }
 }

@@ -17,4 +17,8 @@ export class HomeManager {
    this.noteSignal.set(notes);
    return this.noteSignal();
   }
+
+  deleteNote(id: number) {
+    this.homeService.deleteNote(id);
+  }
 }
