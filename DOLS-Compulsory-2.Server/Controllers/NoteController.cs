@@ -53,8 +53,7 @@ namespace dols_compulsory_2.Server.Controllers
             bool isEnabled = await _featureFlaggingService.IsFeatureEnabled("search");
             if (isEnabled)
             {
-                Console.WriteLine("Feature flag is enabled");
-                return Ok("Feature flag is enabled");
+                return Ok(_noteService.Search(query));
             }
             return NotFound();
         }
