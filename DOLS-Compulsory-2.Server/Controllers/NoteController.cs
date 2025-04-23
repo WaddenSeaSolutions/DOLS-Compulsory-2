@@ -2,7 +2,6 @@ using Microsoft.AspNetCore.Mvc;
 using dols_compulsory_2.Server.Models;
 using dols_compulsory_2.Server.Services;
 using Microsoft.AspNetCore.Http.HttpResults;
-using Flagsmith;
 
 namespace dols_compulsory_2.Server.Controllers
 {
