@@ -24,7 +24,7 @@ RUN npm run build
 FROM nginx:alpine
 
 # Copy the build output to replace the default nginx contents
-COPY --from=build /app/dist/dols-compulsory-2.client /usr/share/nginx/html
+COPY --from=build /app/dist/dols-compulsory-2.client/browser /usr/share/nginx/html
 
 # Create a simple script to update configuration at runtime
 RUN echo "#!/bin/sh" > /docker-entrypoint.d/40-setup-config.sh && \
