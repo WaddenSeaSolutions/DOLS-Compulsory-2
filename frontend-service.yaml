@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: dols-frontend
+spec:
+  selector:
+    app: dols-frontend
+  ports:
+    - port: 32116
+      targetPort: 32116
+  type: ClusterIP
