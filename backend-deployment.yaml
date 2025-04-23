@@ -14,10 +14,10 @@ spec:
     spec:
       containers:
         - name: dols-backend
-          image: your-registry/dols-backend:latest
+          image: andreaseriksen/backend-app:latest
           ports:
             - containerPort: 8080
-            - containerPort: 8081
+            - containerPort: 8081 
           env:
             - name: ASPNETCORE_ENVIRONMENT
               value: "Production"
