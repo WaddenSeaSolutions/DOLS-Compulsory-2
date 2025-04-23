@@ -21,13 +21,13 @@ jobs:
 
     - name: Build and push backend image
       run: |
-        docker build -t your-docker-repo/backend:${GITHUB_SHA} ./backend
-        docker push your-docker-repo/backend:${GITHUB_SHA}
+        docker build -t andreaseriksen/backend:${GITHUB_SHA} ./backend
+        docker push andreaseriksen/backend:${GITHUB_SHA}
 
     - name: Build and push frontend image
       run: |
-        docker build -t your-docker-repo/frontend:${GITHUB_SHA} ./frontend
-        docker push your-docker-repo/frontend:${GITHUB_SHA}
+        docker build -t andreaseriksen/frontend:${GITHUB_SHA} ./frontend
+        docker push andreaseriksen/frontend:${GITHUB_SHA}
 
   deploy:
     runs-on: ubuntu-latest
