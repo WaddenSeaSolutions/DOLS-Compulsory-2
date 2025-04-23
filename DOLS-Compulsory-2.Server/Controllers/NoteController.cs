@@ -50,12 +50,15 @@ namespace dols_compulsory_2.Server.Controllers
         }
 
         [HttpGet("search")]
-        public IActionResult SearchNotes([FromQuery] string query)
+        public async Task<IActionResult> SearchNotes([FromQuery] string query)
         {
-            _featureFlaggingService.IsFeatureEnabled("search").Wait();
-            Console.WriteLine("Feature flag is enabled");
-            var results = _noteService.Search(query); 
-            return Ok(results);
+            bool isEnabled = await _featureFlaggingService.IsFeatureEnabled("search");
+            if (isEnabled)
+            {
+                Console.WriteLine("Feature flag is enabled");
+                return Ok("Feature flag is enabled");
+            }
+            return NotFound();
         }
     }
 }
