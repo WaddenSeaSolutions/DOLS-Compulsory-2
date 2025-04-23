@@ -1,0 +1,17 @@
+<div class="feature-container">
+  <div class="feature-content">
+    <header class="header">PadNote</header>
+    <input type="text" name="noteSearch" placeholder="Search for a previous note"/>
+    <table>
+      <tbody>
+        @for (note of noteSignal(); track $index){
+        <tr>
+          <td>{{ note.Title }}</td>
+          <td>{{ note.Content }}</td>
+          <td>{{ note.CreatedAt }}</td>
+        </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+</div>
