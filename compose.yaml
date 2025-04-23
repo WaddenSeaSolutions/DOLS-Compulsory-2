@@ -25,6 +25,18 @@ services:
       - "32116:32116"
     restart: unless-stopped
 
+  mariadb:
+    image: mariadb:latest
+    container_name: mariadb_container
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: DB
+      MYSQL_USER: myuser
+      MYSQL_PASSWORD: mypassword
+    ports:
+      - "3300:3306"  # Binder port 3300 på værten til 3306 inde i containeren
+
 networks:
   default:
     driver: bridge

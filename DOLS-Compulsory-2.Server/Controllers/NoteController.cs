@@ -3,6 +3,7 @@ using dols_compulsory_2.Server.Models;
 using dols_compulsory_2.Server.Services;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Flagsmith;
+using DOLS_Compulsory_2.Server.Services;
 
 namespace dols_compulsory_2.Server.Controllers
 {
@@ -12,9 +13,12 @@ namespace dols_compulsory_2.Server.Controllers
     {
         private readonly NoteService _noteService; 
 
-        public NoteController(NoteService noteService) 
+        private readonly FeatureFlaggingService _featureFlaggingService;
+
+        public NoteController(NoteService noteService, FeatureFlaggingService featureFlaggingService) 
         {
             _noteService = noteService;
+            _featureFlaggingService = featureFlaggingService;
         }
 
         [HttpGet]
@@ -48,6 +52,8 @@ namespace dols_compulsory_2.Server.Controllers
         [HttpGet("search")]
         public IActionResult SearchNotes([FromQuery] string query)
         {
+            _featureFlaggingService.IsFeatureEnabled("search").Wait();
+            Console.WriteLine("Feature flag is enabled");
             var results = _noteService.Search(query); 
             return Ok(results);
         }
