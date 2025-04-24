@@ -32,5 +32,13 @@ namespace DOLS.UserMicroService.Models
             await _context.SaveChangesAsync();
             return true;
         }
+        
+        public async Task<User?> LoginUserAsync(LoginRequest request)
+        {
+            var user = await _context.Users
+                .FirstOrDefaultAsync(u => u.Username == request.Username && u.Password == request.Password);
+
+            return user;
+        }
     }
 }

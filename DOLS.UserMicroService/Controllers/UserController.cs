@@ -27,5 +27,23 @@ namespace DOLS.UserMicroService.Controllers
 
             return BadRequest(new { message = "User registration failed." });
         }
+        
+        [HttpPost("login")]
+        public async Task<IActionResult> Login([FromBody] LoginRequest request)
+        {
+            var result = await _userService.LoginUserAsync(request);
+
+            if (result != null)
+            {
+                return Ok(new
+                {
+                    message = "Login successful!",
+                    token = result // or whatever your login method returns (JWT, user info, etc.)
+                });
+            }
+
+            return Unauthorized(new { message = "Invalid username or password." });
+        }
+
     }
 }
