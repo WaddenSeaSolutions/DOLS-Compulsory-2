@@ -13,6 +13,7 @@ services:
     environment:
       - ASPNETCORE_ENVIRONMENT=Production
       - ASPNETCORE_URLS=http://+:8080
+      - FLAGSMITH_API_KEY
     volumes:
       - ./app-data:/app/data
     restart: unless-stopped
