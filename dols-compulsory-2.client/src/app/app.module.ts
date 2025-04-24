@@ -9,7 +9,6 @@ import { LoginComponent } from './presentation/login/login.component';
 @NgModule({
   declarations: [
     AppComponent,
-    LoginComponent
   ],
   imports: [
     BrowserModule, HttpClientModule,
