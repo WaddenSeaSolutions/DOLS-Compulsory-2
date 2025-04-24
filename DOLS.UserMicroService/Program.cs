@@ -5,7 +5,11 @@ using DOLS.UserMicroService.Models;
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddDbContext<UserDbContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+    options.UseMySql(
+        builder.Configuration.GetConnectionString("DefaultConnection"),
+        new MySqlServerVersion(new Version(11, 4, 5))
+    )
+);
 
 builder.Services.AddScoped<UserService>();
 
