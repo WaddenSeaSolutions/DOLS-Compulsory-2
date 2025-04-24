@@ -1,8 +1,21 @@
 <div class="feature-container">
   <div class="feature-content">
     <header class="header">PadNote</header>
-    <input type="text" [(ngModel)]="noteSearchValue" name="noteSearch" placeholder="Search for a previous note" />
-    <button click="searchNote()">Search</button>
+    @if (!noteCreationReady) {
+    <input type="text"
+           [(ngModel)]="noteSearchValue"
+           placeholder="Search for a previous note" />
+    <button (click)="searchNote()">Search</button>
+    <button (click)="readyCreateNote()">Create a note</button>
+    } @else {
+    <input type="text"
+           [(ngModel)]="noteTitleValue"
+           placeholder="Write your title here" />
+    <textarea [(ngModel)]="noteContentValue"
+              placeholder="Write your note here"></textarea>
+    <button (click)="createNote()">Create</button>
+    <button (click)="cancelCreateNote()">Cancel</button>
+    }
     <table>
       <tbody>
         @for (note of noteSignal(); track $index){
