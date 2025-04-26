@@ -1,28 +1,28 @@
-# Brug en officiel .NET 9 SDK som build image
-FROM mcr.microsoft.com/dotnet/aspnet:9.0 AS base
+# Use official .NET 9 SDK as build image
+FROM mcr.microsoft.com/dotnet/sdk:9.0 AS build
 WORKDIR /app
 
-# Kopier projektfilen og gendan afhængigheder
-COPY DOLS.UserMicroService/*.csproj ./
+# Copy project file and restore dependencies
+COPY *.csproj ./
 RUN dotnet restore
 
-# Kopier resten af applikationen og byg den
-COPY DOLS.UserMicroService/. ./
+# Copy the rest of the application and build it
+COPY . ./
 RUN dotnet publish -c Release -o /out
 
-# Brug en officiel .NET 9 runtime som runtime image
+# Use official .NET 9 runtime as runtime image
 FROM mcr.microsoft.com/dotnet/aspnet:9.0 AS runtime
 WORKDIR /app
 
-# Kopier den publicerede applikation fra build image
+# Copy published application from build image
 COPY --from=build /out ./
 
-# Eksponer porten, som applikationen lytter på
+# Expose port
 EXPOSE 8082
 
-# Sæt miljøvariabler
+# Set environment variables
 ENV ASPNETCORE_URLS=http://+:8082
 ENV ASPNETCORE_ENVIRONMENT=Production
 
-# Start applikationen
-ENTRYPOINT ["dotnet", "DOLS.UserMicroService.dll"]
+# Start the app
+ENTRYPOINT ["dotnet", "DOLS.UserService.dll"]

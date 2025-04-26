@@ -40,12 +40,12 @@ services:
   
   dols-user-microservice:
     build:
-      context: .
-      dockerfile: DOLS.UserMicroService/Dockerfile
+      context: ./DOLS.UserMicroService
+      dockerfile: Dockerfile
       args:
         BUILD_CONFIGURATION: Release
     ports:
-      - "8082:8082" # Binder port 8082 på værten til port 8082 i containeren
+      - "8082:8082"
     environment:
       - ASPNETCORE_ENVIRONMENT=Production
       - ASPNETCORE_URLS=http://+:8082
