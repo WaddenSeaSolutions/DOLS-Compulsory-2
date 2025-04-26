@@ -9,9 +9,9 @@ namespace DOLS.UserService.Service
 
         private readonly UserDAL _userDAL;
 
-        public UsersService()
+        public UsersService(UserDAL userDAL)
         {
-            _userDAL = new UserDAL();
+            _userDAL = userDAL;
         }
 
 

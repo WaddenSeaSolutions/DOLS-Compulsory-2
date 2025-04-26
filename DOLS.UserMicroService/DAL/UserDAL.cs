@@ -19,7 +19,6 @@ namespace DOLS.UserService.DAL
                             VALUES (@Username, @Email, @Password);
                             SELECT LAST_INSERT_ID();";
 
-            // Execute the query and get the newly inserted user's ID
             int userId = _connection.ExecuteScalar<int>(sql, new
             {
                 user.Username,
@@ -27,7 +26,6 @@ namespace DOLS.UserService.DAL
                 user.Password
             });
 
-            // Return the complete User object with the generated ID
             user.Id = userId;
             return user;
         }

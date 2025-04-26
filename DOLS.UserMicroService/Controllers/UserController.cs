@@ -11,9 +11,9 @@ namespace DOLS.UserMicroService.Controllers
     {
         private readonly UsersService _userService;
 
-        public UserController()
+        public UserController(UsersService usersService)
         {
-            _userService = new UsersService();
+            _userService = usersService;
         }
 
         [HttpPost("register")]
