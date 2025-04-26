@@ -61,7 +61,7 @@ services:
       - dols-app
       - dols-frontend
     volumes:
-      - C:/Users/jonas/Desktop/RiderProjects/DOLS-Compulsory-2/nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
     restart: unless-stopped
 
 networks:
