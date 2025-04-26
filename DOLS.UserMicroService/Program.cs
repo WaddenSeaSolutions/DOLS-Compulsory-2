@@ -1,17 +1,19 @@
-using Microsoft.EntityFrameworkCore;
-using DOLS.UserMicroService.Data;
-using DOLS.UserMicroService.Models;
+
+using DOLS.UserService.DAL;
+using DOLS.UserService.Service;
+using DOLS_Compulsory_2.Server.DAL;
+using MySqlConnector;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddDbContext<UserDbContext>(options =>
-    options.UseMySql(
-        builder.Configuration.GetConnectionString("DefaultConnection"),
-        new MySqlServerVersion(new Version(11, 4, 5))
-    )
-);
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
 
-builder.Services.AddScoped<UserService>();
+builder.Services.AddScoped<MySqlConnection>(_ =>
+    new MySqlConnection(DbUtils.ProperlyFormattedConnectionString));
+
+builder.Services.AddScoped<UsersService>();
+builder.Services.AddScoped<UserDAL>();
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();

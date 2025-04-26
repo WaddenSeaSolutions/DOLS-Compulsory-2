@@ -48,7 +48,7 @@ services:
       MYSQL_USER: myuser
       MYSQL_PASSWORD: mypassword
     ports:
-      - "3301:3306"
+      - "3301:3307"
 
 networks:
   default:
