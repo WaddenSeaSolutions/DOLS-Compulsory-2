@@ -1,4 +1,4 @@
-Create Database DOLS
+Create Database DB
 
 CREATE TABLE Notes (
     -- 'Id' column: Integer, Primary Key, Auto-incrementing

@@ -1,0 +1,13 @@
+-- Create the database
+CREATE DATABASE IF NOT EXISTS userdb;
+
+-- Use the database
+USE userdb;
+
+-- Create the Users table
+CREATE TABLE IF NOT EXISTS Users (
+    Id INT AUTO_INCREMENT PRIMARY KEY,
+    Username VARCHAR(255) NOT NULL UNIQUE,
+    Email VARCHAR(255) NOT NULL UNIQUE,
+    Password VARCHAR(255) NOT NULL
+);
