@@ -2,33 +2,31 @@ import { HttpClient } from "@angular/common/http";
 import { inject, Injectable } from "@angular/core";
 import { LoginRequest } from "../models/login-request.model";
 import { User } from "../models/user.model";
+import { RegisterRequest } from "../models/register-request.model";
+import { firstValueFrom } from "rxjs/internal/firstValueFrom";
 
 @Injectable({
   providedIn: 'root',
 })
 export class LoginService {
-  private apiUrl: string = 'https://localhost:44310/api/';
+  private apiUrl: string = 'http://localhost:8082/api/User/';
   private http: HttpClient = inject(HttpClient);
 
 
-  login(username: string, password: string) {
-    const loginRequest: LoginRequest = {
-      Username: username,
-      Password: password
+  async login(username: string, password: string): Promise<any> {
+    const loginRequest: LoginRequest = { Username: username, Password: password };
 
-    }
-    const response = this.http.post(this.apiUrl+'Users/Login',loginRequest)
-    return response
+    return firstValueFrom(this.http.post(this.apiUrl + 'login', loginRequest));
   }
 
-  register(username: string, password: string, email: string) {
-    const user: User = {
-      Id : 1,
+  async register(username: string, password: string, email: string) {
+    const user: RegisterRequest = {
       Username: username,
       Password: password,
       Email: email
     }
-    this.http.post(this.apiUrl + 'Users/Register', user)
+    const response = this.http.post(this.apiUrl + 'register', user)
+    return firstValueFrom(response);
   }
 
 }
