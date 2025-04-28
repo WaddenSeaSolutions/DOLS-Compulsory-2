@@ -29,7 +29,8 @@ jobs:
     - name: Build and push frontend image
       run: |
         docker build -t andreaseriksen/frontend:${GITHUB_SHA} -f ./dols-compulsory-2.client/Dockerfile .
-        docker push andreaseriksen/frontend:${GITHUB_SHA}
+        docker tag andreaseriksen/frontend:${GITHUB_SHA} andreaseriksen/frontend:latest
+        docker push andreaseriksen/frontend:latest
 
   deploy:
     runs-on: ubuntu-latest
