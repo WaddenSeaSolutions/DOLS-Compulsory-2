@@ -20,12 +20,11 @@ namespace DOLS_Compulsory_2.Server.Services
         public async Task<bool> IsFeatureEnabled(string featureName)
         {
             var flags = await _flagsmithClient.GetEnvironmentFlags();
-            if (flags != null) // Check for null
+            if (flags != null) 
             {
                 return await flags.IsFeatureEnabled(featureName);
             }
-            // Optionally log an error here about flag retrieval failure
-            return false; // Or throw an exception, depending on your needs
+            return false;
         }
     }
 }

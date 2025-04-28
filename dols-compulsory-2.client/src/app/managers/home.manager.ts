@@ -6,6 +6,7 @@ import { HomeService } from "../services/home.service";
   providedIn: 'root',
 })
 export class HomeManager {
+
   private homeService: HomeService = inject(HomeService);
   private noteSignal: WritableSignal<Note[]>;
   constructor() {
@@ -27,5 +28,9 @@ export class HomeManager {
   async searchNotes(searchValue: string){
     return this.homeService.searchNotes(searchValue);
 
+  }
+
+  async getFeatureFlag(featureflag: string): Promise<boolean> {
+    return this.homeService.getFeatureFlag(featureflag);
   }
 }

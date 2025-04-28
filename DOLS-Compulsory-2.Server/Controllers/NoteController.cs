@@ -58,6 +58,22 @@ namespace dols_compulsory_2.Server.Controllers
             return NotFound();
         }
 
+        [HttpGet("feature-flag")]
+        public async Task<IActionResult> GetFeatureFlagStatus([FromQuery] string featureName)
+        {
+            Console.WriteLine("Modtaget");
+            Console.WriteLine(featureName);
+            try
+            {
+                bool isEnabled = await _featureFlaggingService.IsFeatureEnabled(featureName);
+                return Ok(new { featureName, isEnabled });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { message = "An error occurred while checking the feature flag.", details = ex.Message });
+            }
+        }
+
         [HttpPost("init-db")]
         public async Task<IActionResult> InitializeDatabase()
         {

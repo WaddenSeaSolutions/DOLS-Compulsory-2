@@ -39,7 +39,12 @@ export class HomeFacade {
   }
 
   async searchNotes(searchValue: string) {
+    
     const filteredNotes = await this.homeManager.searchNotes(searchValue);
     this.noteSignal.set(filteredNotes);
+  }
+
+  async getFeatureFlag(featureflag: string): Promise<boolean> {
+    return this.homeManager.getFeatureFlag(featureflag);
   }
 }

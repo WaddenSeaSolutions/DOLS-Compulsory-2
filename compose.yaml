@@ -24,6 +24,8 @@ services:
     build:
       context: . 
       dockerfile: dols-compulsory-2.client/Dockerfile
+    environment:
+        - FLAGSMITH_API_KEY
     ports:
       - "32116:32116"
     restart: unless-stopped

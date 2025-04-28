@@ -1,6 +1,6 @@
 import { Injectable, inject } from "@angular/core";
 import { Note } from "../models/note.model";
-import { firstValueFrom, Observable } from "rxjs";
+import { catchError, firstValueFrom, map, Observable, of } from "rxjs";
 import { HttpClient, HttpParams } from "@angular/common/http";
 
 @Injectable({
@@ -30,8 +30,6 @@ export class HomeService {
       })
   }
 
-
-
   deleteNote(id: number): Promise<Note> {
     const deletedNote = this.http.delete<Note>(this.apiUrl + 'Note' + id)
     return firstValueFrom(deletedNote);
@@ -42,4 +40,25 @@ export class HomeService {
     const filteredNotes = this.http.get<Note[]>(this.apiUrl + 'Note/search', {params});
     return firstValueFrom(filteredNotes);
   }
+
+  
+  getFeatureFlag(featureflag: string): Promise<boolean> {
+    const params = new HttpParams().set('featureName', featureflag);
+    return firstValueFrom(
+      this.http.get<FeatureFlagResponse>(this.apiUrl + 'Note/feature-flag', { params }).pipe(
+        map((response) => response.isEnabled),
+        catchError((error) => {
+          console.error('Fejl ved hentning af feature flag:', error);
+          return of(false);
+        })
+      )
+    );
+  }
+
+  
+}
+
+interface FeatureFlagResponse {
+  featureName: string;
+  isEnabled: boolean;
 }

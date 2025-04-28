@@ -19,12 +19,15 @@ export class HomeComponent {
   noteCreationReady: boolean = false;
   noteTitleValue: WritableSignal<string>;
   noteContentValue: WritableSignal<string>;
+  isFlagEnabled: boolean = true;
+
   constructor()
   {
     this.noteSignal = this.homeFacade.getNoteSignal();
     this.noteSearchValue = signal('');
     this.noteTitleValue = signal('');
     this.noteContentValue = signal('');
+
   }
 
   createNote() {
@@ -41,10 +44,18 @@ export class HomeComponent {
     this.homeFacade.deleteNote(id);
   }
 
-  searchNote() {
-    const searchValue = this.noteSearchValue();
-    this.homeFacade.searchNotes(searchValue);
+  async searchNote() {
+    this.isFlagEnabled = await this.homeFacade.getFeatureFlag("search");
+    
+    if(this.isFlagEnabled){
+      const searchValue = this.noteSearchValue();
+      this.homeFacade.searchNotes(searchValue);
+    }
+    else {
+      alert("Search is disabled")
+    }
   }
+
   readyCreateNote() {
     this.noteCreationReady = true;
   }
