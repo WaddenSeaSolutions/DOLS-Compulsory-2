@@ -22,7 +22,6 @@ export class HomeComponent {
   constructor()
   {
     this.noteSignal = this.homeFacade.getNoteSignal();
-    console.log("Test"+this.noteSignal());
     this.noteSearchValue = signal('');
     this.noteTitleValue = signal('');
     this.noteContentValue = signal('');
@@ -30,7 +29,12 @@ export class HomeComponent {
 
   createNote() {
     this.homeFacade.createNote(this.noteTitleValue(), this.noteContentValue());
+     this.updateNoteSignal();
   }
+
+   updateNoteSignal() {
+     this.noteSignal = this.homeFacade.getNoteSignal();
+   }
 
   public deleteNote(id: number)
   {

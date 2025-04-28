@@ -17,7 +17,6 @@ export class HomeFacade {
   async loadNotes() {
     const notes = await this.getNotes();
     this.noteSignal.set(notes);
-    console.log(this.noteSignal());
   }
 
   async getNotes(): Promise<Note[]> {
@@ -25,12 +24,15 @@ export class HomeFacade {
   }
 
   getNoteSignal() {
+    this.loadNotes();
     return this.noteSignal;
   }
 
-  createNote(title: string, content: string) {
-    this.homeManager.createNote(title, content);
+  async createNote(title: string, content: string) {
+    const createdNote = await this.homeManager.createNote(title, content);
+    this.noteSignal.update((currentNotes) => [...currentNotes, createdNote]);
   }
+
 
   deleteNote(id: number) {
     this.homeManager.deleteNote(id);

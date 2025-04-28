@@ -17,7 +17,7 @@ export class HomeManager {
   }
 
   createNote(title: string, content: string) {
-    this.homeService.createNote(title, content);
+    return this.homeService.createNote(title, content);
   }
 
   deleteNote(id: number) {
