@@ -24,7 +24,8 @@ jobs:
     - name: Build and push backend image
       run: |
         docker build -t andreaseriksen/backend:${GITHUB_SHA} -f ./DOLS-Compulsory-2.Server/Dockerfile .
-        docker push andreaseriksen/backend:${GITHUB_SHA}
+        docker tag andreaseriksen/backend:${GITHUB_SHA} andreaseriksen/backend:latest
+        docker push andreaseriksen/backend:latest
 
     - name: Build and push frontend image
       run: |
