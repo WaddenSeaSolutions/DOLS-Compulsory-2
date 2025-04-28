@@ -1,0 +1,15 @@
+﻿#!/bin/bash
+
+# Install .NET 9 SDK
+wget https://download.visualstudio.microsoft.com/download/pr/48d9b314-891e-49c8-b1e3-3c3e5b6bb7f5/dotnet-sdk-9.0.100-linux-x64.tar.gz -O dotnet9.tar.gz
+mkdir -p $HOME/dotnet9
+tar -zxf dotnet9.tar.gz -C $HOME/dotnet9
+
+# Use the installed SDK
+export DOTNET_ROOT=$HOME/dotnet9
+export PATH=$DOTNET_ROOT:$PATH
+
+# Proceed to build
+dotnet restore
+dotnet build
+dotnet publish -c Release -o out
