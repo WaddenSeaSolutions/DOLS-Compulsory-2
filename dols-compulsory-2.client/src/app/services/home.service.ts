@@ -9,7 +9,7 @@ import { HttpClient, HttpParams } from "@angular/common/http";
 export class HomeService {
   private http: HttpClient = inject(HttpClient);
 
-  private apiUrl: string = 'http://localhost:8080/api/';
+  private apiUrl: string = 'http://localhost:80/api/';
   constructor() { }
 
   getNotes(): Promise<Note[]> {

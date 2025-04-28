@@ -9,7 +9,7 @@ import { firstValueFrom } from "rxjs/internal/firstValueFrom";
   providedIn: 'root',
 })
 export class LoginService {
-  private apiUrl: string = 'http://localhost:8082/api/User/';
+  private apiUrl: string = 'http://localhost:80/api/User/';
   private http: HttpClient = inject(HttpClient);
 
 
