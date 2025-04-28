@@ -17,12 +17,22 @@ builder.Services.AddScoped<MySqlConnection>(_ =>
 
 builder.Services.AddScoped<NoteService>();
 builder.Services.AddScoped<NoteDAL>();
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowFrontend", policy =>
+    {
+        policy
+            .WithOrigins("http://localhost:32116")
+            .AllowAnyHeader()
+            .AllowAnyMethod();
+    });
+});
 
 var app = builder.Build();
+app.UseCors("AllowFrontend");
 
 app.UseDefaultFiles();
 app.MapStaticAssets();
-
 
 app.UseSwagger();                         
 app.UseSwaggerUI();                       
