@@ -37,5 +37,26 @@ namespace DOLS_Compulsory_2.Server.DAL
             var sql = "SELECT Id, Title, Content, CreatedAt FROM Notes WHERE Title LIKE @Keyword OR Content LIKE @Keyword";
             return _connection.Query<NoteModel>(sql, new { Keyword = $"%{keyword}%" }).ToList();
         }
+
+        public async Task CreateTableIfNotExistsAsync()
+        {
+            var sql = @"
+            CREATE TABLE IF NOT EXISTS Notes (
+                Id INT PRIMARY KEY AUTO_INCREMENT,
+                Title VARCHAR(255) NOT NULL,
+                Content TEXT NOT NULL,
+                CreatedAt DATETIME NOT NULL DEFAULT UTC_TIMESTAMP()
+            )";
+
+            try
+            {
+                await _connection.ExecuteAsync(sql);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("An error occurred while creating the Notes table.", ex);
+            }
+        }
+
     }
 }

@@ -49,5 +49,12 @@ namespace DOLS.UserService.Service
 
             return user;
         }
+
+        public async Task<Task> InitializeDatabase()
+        {
+
+            return _userDAL.CreateTableIfNotExistsAsync();
+           
+        }
     }
 }

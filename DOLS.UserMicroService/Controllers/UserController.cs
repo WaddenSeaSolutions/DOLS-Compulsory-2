@@ -53,5 +53,22 @@ namespace DOLS.UserMicroService.Controllers
                 return StatusCode(500, new { message = "An error occurred during login.", details = ex.Message });
             }
         }
+    
+
+        [HttpPost("init-db")]
+        public async Task<IActionResult> InitializeDatabase()
+        {
+            try
+            {
+                await _userService.InitializeDatabase();
+
+                return Ok(new { message = "Database initialized successfully." });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { message = "An error occurred during database initialization.", details = ex.Message });
+            }
+        }
+
     }
 }

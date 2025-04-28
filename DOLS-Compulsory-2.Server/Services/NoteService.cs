@@ -32,5 +32,10 @@ namespace dols_compulsory_2.Server.Services
         {
             return _noteDAL.Search(keyword);
         }
+
+        public async Task<Task> InitializeDatabase()
+        {
+            return _noteDAL.CreateTableIfNotExistsAsync();
+        }
     }
 }
