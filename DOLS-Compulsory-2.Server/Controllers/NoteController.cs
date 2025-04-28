@@ -57,5 +57,21 @@ namespace dols_compulsory_2.Server.Controllers
             }
             return NotFound();
         }
+
+        [HttpPost("init-db")]
+        public async Task<IActionResult> InitializeDatabase()
+        {
+            try
+            {
+                await _noteService.InitializeDatabase();
+
+                return Ok(new { message = "Database initialized successfully." });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { message = "An error occurred during database initialization.", details = ex.Message });
+            }
+        }
+
     }
 }
