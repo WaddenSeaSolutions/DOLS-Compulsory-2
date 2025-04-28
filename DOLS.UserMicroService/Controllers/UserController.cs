@@ -1,31 +1,57 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using DOLS.UserMicroService.DTO;
+using DOLS.UserService.Service;
 using DOLS.UserMicroService.Models;
-using Microsoft.EntityFrameworkCore;
-using System.Threading.Tasks;
 
 namespace DOLS.UserMicroService.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/User")]
     [ApiController]
     public class UserController : ControllerBase
     {
-        private readonly UserService _userService;
+        private readonly UsersService _userService;
 
-        public UserController(UserService userService)
+        public UserController(UsersService usersService)
         {
-            _userService = userService;
+            _userService = usersService;
         }
 
         [HttpPost("register")]
         public async Task<IActionResult> Register([FromBody] RegisterRequest request)
         {
-            var result = await _userService.RegisterUserAsync(request);
+            try
+            {
+                User user = _userService.Register(request.Username, request.Email, request.Password);
 
-            if (result)
-                return Ok(new { message = "User registered successfully!" });
+                return Ok(new { user.Id, user.Username, user.Email });
+            }
+            catch (UnauthorizedAccessException ex)
+            {
+                return Unauthorized(new { message = ex.Message });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { message = "An error occurred during registration.", details = ex.Message });
+            }
+        }
 
-            return BadRequest(new { message = "User registration failed." });
+        [HttpPost("login")]
+        public async Task<IActionResult> Login([FromBody] LoginRequest request)
+        {
+            try
+            {
+                User user = _userService.Login(request.Username, request.Password);
+
+                return Ok(new { user.Id, user.Username, user.Email });
+            }
+            catch (UnauthorizedAccessException ex)
+            {
+                return Unauthorized(new { message = ex.Message });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { message = "An error occurred during login.", details = ex.Message });
+            }
         }
     }
 }

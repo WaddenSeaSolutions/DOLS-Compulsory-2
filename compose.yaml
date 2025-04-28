@@ -40,17 +40,21 @@ services:
     ports:
       - "3300:3306"  # Binder port 3300 på værten til 3306 inde i containeren
   
-  userdb:
-    image: mariadb:latest
-    container_name: user_mariadb_container
-    restart: always
-    environment:
-      MYSQL_ROOT_PASSWORD: rootpassword
-      MYSQL_DATABASE: userdb
-      MYSQL_USER: myuser
-      MYSQL_PASSWORD: mypassword
+  dols-user-microservice:
+    build:
+      context: ./DOLS.UserMicroService
+      dockerfile: Dockerfile
+      args:
+        BUILD_CONFIGURATION: Release
     ports:
-      - "3301:3306"
+      - "8082:8082"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Production
+      - ASPNETCORE_URLS=http://+:8082
+    depends_on:
+      - mariadb
+    restart: unless-stopped
+
 
   nginx:
     image: nginx:latest

@@ -1,7 +1,9 @@
 import { Component, inject, signal, Signal, WritableSignal } from '@angular/core';
 import { HomeFacade } from './home.facade';
 import { Note } from '../../models/note.model';
-import { FormControl, FormGroup, FormsModule, Validators } from '@angular/forms';
+import { FormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
+
 
 @Component({
   selector: 'app-home',
@@ -13,15 +15,20 @@ import { FormControl, FormGroup, FormsModule, Validators } from '@angular/forms'
 export class HomeComponent {
   private homeFacade: HomeFacade = inject(HomeFacade);
   noteSignal: Signal<Note[]>;
-  noteSearchValue:WritableSignal<string>
+  noteSearchValue: WritableSignal<string>
+  noteCreationReady: boolean = false;
+  noteTitleValue: WritableSignal<string>;
+  noteContentValue: WritableSignal<string>;
   constructor()
   {
     this.noteSignal = this.homeFacade.getNoteSignal();
     this.noteSearchValue = signal('');
+    this.noteTitleValue = signal('');
+    this.noteContentValue = signal('');
   }
 
-  createNote(title: string, content: string) {
-    this.homeFacade.createNote(title, content);
+  createNote() {
+    this.homeFacade.createNote(this.noteTitleValue(), this.noteContentValue());
   }
 
   public deleteNote(id: number)
@@ -33,5 +40,11 @@ export class HomeComponent {
     const searchValue = this.noteSearchValue();
     const filteredNotes = this.noteSignal().filter(note => note.Title.toLowerCase().includes(searchValue.toLowerCase()));
     return filteredNotes;
+  }
+  readyCreateNote() {
+    this.noteCreationReady = true;
+  }
+  cancelCreateNote() {
+    this.noteCreationReady = false;
   }
 }
