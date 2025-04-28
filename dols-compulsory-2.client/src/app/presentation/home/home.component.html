@@ -16,18 +16,25 @@
     <button (click)="createNote()">Create</button>
     <button (click)="cancelCreateNote()">Cancel</button>
     }
-    <table>
-      <tbody>
-        @for (note of noteSignal(); track $index){
+    <table class="table">
+      <thead>
         <tr>
-          <td>{{ note.Id }}</td>
-          <td>{{ note.Title }}</td>
-          <td>{{ note.Content }}</td>
-          <td>{{ note.CreatedAt }}</td>
-          <td><button click="deleteNote()">Delete</button></td>
+          <th>Id</th>
+          <th>Title</th>
+          <th>Content</th>
+          <th>Created At</th>
+          <th>Actions</th>
         </tr>
-        }
+      </thead>
+      <tbody>
+        <tr *ngFor="let note of noteSignal(); let i = index;">
+          <td>{{ note.id }}</td>
+          <td>{{ note.title }}</td>
+          <td>{{ note.content }}</td>
+          <td>{{ note.createdAt }}</td>
+        </tr>
       </tbody>
     </table>
+
   </div>
 </div>

@@ -8,7 +8,7 @@ import { CommonModule } from '@angular/common';
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [FormsModule],
+  imports: [CommonModule, FormsModule],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
 })
@@ -22,6 +22,7 @@ export class HomeComponent {
   constructor()
   {
     this.noteSignal = this.homeFacade.getNoteSignal();
+    console.log("Test"+this.noteSignal());
     this.noteSearchValue = signal('');
     this.noteTitleValue = signal('');
     this.noteContentValue = signal('');
@@ -38,8 +39,7 @@ export class HomeComponent {
 
   searchNote() {
     const searchValue = this.noteSearchValue();
-    const filteredNotes = this.noteSignal().filter(note => note.Title.toLowerCase().includes(searchValue.toLowerCase()));
-    return filteredNotes;
+    this.homeFacade.searchNotes(searchValue);
   }
   readyCreateNote() {
     this.noteCreationReady = true;

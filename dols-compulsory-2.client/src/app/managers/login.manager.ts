@@ -1,5 +1,6 @@
 import { inject, Injectable } from "@angular/core";
 import { LoginService } from "../services/login.service";
+import { map, catchError, of } from "rxjs";
 
 @Injectable({
   providedIn: 'root',
@@ -7,22 +8,25 @@ import { LoginService } from "../services/login.service";
 export class LoginManager {
   private loginService: LoginService = inject(LoginService);
 
-  login(username: string, password: string): boolean {
-    this.loginService.login(username, password).subscribe({
-      next: (response: any) => {
-        console.log('Login successful', response);
-        return true
-      },
-      error: (error: any) => {
-        console.error('Login failed', error);
-        return false
-      }
-    });
-    return false
+  async login(username: string, password: string): Promise<boolean> {
+    try {
+      const response = await this.loginService.login(username, password);
+      console.log('Login successful', response);
+      return true;
+    } catch (error) {
+      console.error('Login failed', error);
+      return false;
+    }
   }
 
-  register(username: string, password: string, email: string) {
-    this.loginService.register(username, password, email)
+  async register(username: string, password: string, email: string) {
+    try {
+      const response = await this.loginService.register(username, password, email)
+      console.log('register successful', response);
+      return true
+    } catch (error) {
+      return false
+    }
   }
 
 }

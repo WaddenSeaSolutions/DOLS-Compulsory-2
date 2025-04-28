@@ -13,9 +13,7 @@ export class HomeManager {
   }
 
   async getNotes(): Promise<Note[]> {
-   const notes = await this.homeService.getNotes();
-   this.noteSignal.set(notes);
-   return this.noteSignal();
+   return await this.homeService.getNotes();
   }
 
   createNote(title: string, content: string) {
@@ -24,5 +22,10 @@ export class HomeManager {
 
   deleteNote(id: number) {
     this.homeService.deleteNote(id);
+  }
+
+  async searchNotes(searchValue: string){
+    return this.homeService.searchNotes(searchValue);
+
   }
 }
