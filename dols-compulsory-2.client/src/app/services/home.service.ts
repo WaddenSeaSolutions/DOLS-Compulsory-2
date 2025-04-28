@@ -1,7 +1,7 @@
 import { Injectable, inject } from "@angular/core";
 import { Note } from "../models/note.model";
 import { firstValueFrom, Observable } from "rxjs";
-import { HttpClient } from "@angular/common/http";
+import { HttpClient, HttpParams } from "@angular/common/http";
 
 @Injectable({
   providedIn: 'root',
@@ -9,22 +9,32 @@ import { HttpClient } from "@angular/common/http";
 export class HomeService {
   private http: HttpClient = inject(HttpClient);
 
-  private apiUrl: string = 'https://localhost:44310/api/';
+  private apiUrl: string = 'http://localhost:8080/api/';
   constructor() { }
 
   getNotes(): Promise<Note[]> {
-    const notes: Observable<Note[]> = this.http.get<Note[]>(this.apiUrl + 'Notes/GetNotes')
+    const notes: Observable<Note[]> = this.http.get<Note[]>(this.apiUrl + 'Note')
     return firstValueFrom(notes)
 
   }
 
   createNote(title: string, content: string) {
-    const notes = this.http.post<Note>(this.apiUrl + 'Notes/CreateNote', { Title: title, Content: content });
+    const noteToCreate = {
+      Title: title,
+      Content: content
+    }
+    const notes = this.http.post<Note>(this.apiUrl + 'Note', noteToCreate);
     return firstValueFrom(notes);
   }
 
   deleteNote(id: number): Promise<Note> {
-    const deletedNote = this.http.delete<Note>(this.apiUrl + 'Notes/DeleteNote/' + id)
+    const deletedNote = this.http.delete<Note>(this.apiUrl + 'Note' + id)
     return firstValueFrom(deletedNote);
+  }
+
+  searchNotes(searchValue: string): Promise<Note[]> {
+    const params = new HttpParams().set('query', searchValue);
+    const filteredNotes = this.http.get<Note[]>(this.apiUrl + 'Note/search', {params});
+    return firstValueFrom(filteredNotes);
   }
 }

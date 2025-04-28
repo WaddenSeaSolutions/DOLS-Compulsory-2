@@ -17,6 +17,7 @@ export class HomeFacade {
   async loadNotes() {
     const notes = await this.getNotes();
     this.noteSignal.set(notes);
+    console.log(this.noteSignal());
   }
 
   async getNotes(): Promise<Note[]> {
@@ -33,5 +34,10 @@ export class HomeFacade {
 
   deleteNote(id: number) {
     this.homeManager.deleteNote(id);
+  }
+
+  async searchNotes(searchValue: string) {
+    const filteredNotes = await this.homeManager.searchNotes(searchValue);
+    this.noteSignal.set(filteredNotes);
   }
 }

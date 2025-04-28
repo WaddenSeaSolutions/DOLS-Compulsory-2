@@ -8,11 +8,11 @@ export class LoginFacade {
 
   private loginManager: LoginManager = inject(LoginManager);
 
-  login(username:string,password:string):boolean {
+  login(username: string, password: string): Promise<boolean> {
     return this.loginManager.login(username, password);
   }
 
   register(username:string,password:string,email:string) {
-    this.loginManager.register(username, password, email);
+    return this.loginManager.register(username, password, email);
   }
 }
